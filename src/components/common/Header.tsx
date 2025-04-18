@@ -1,27 +1,66 @@
 import { Link } from "react-router-dom";
 const Header = () => {
   return (
-    <header className="w-full h-16 bg-blue-600 flex items-center px-6 text-white">
-      <div className="flex items-center space-x-5">
-      <h1 className="text-xl font-bold">TaskFlow</h1>
-      <nav className="flex space-x-4">
-        <Link to="/" className="hover:underline">
-          내작업
-        </Link>
-        <Link to="/board" className="hover:underline">
-          프로젝트
-        </Link>
-      </nav>
+    <header className="w-full h-16 bg-blue-600 flex items-center justify-between px-6 text-white">
+      
+      {/* 왼쪽 정렬렬 */}
+      <div className="flex items-end space-x-5">
+        <h1 className="text-2xl font-bold">TaskFlow</h1>
+        <nav className="flex">
+          <ul className="space-x-4">
+            <Link to="/" className="hover:underline text-sm">
+              내작업
+            </Link>
+            <Link to="/board" className="hover:underline text-sm">
+              프로젝트
+            </Link>
+          </ul>
+        </nav>
       </div>
 
       {/* 오른쪽 정렬 */}
-      <div className="flex items-center space-x-4">
-        <div className="border rounded px-3 py-1 bg-white text-black">
-          🔍 검색창
+      <div className="flex items-end space-x-4">
+        <div className="flex border rounded px-2 py-1 h-8 bg-white text-black">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input className="px-2"placeholder="검색"/>
         </div>
-        <p>🔔</p>
-        <p>👤</p>
+        {/* 알람 아이콘 */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          className="lucide lucide-bell-icon lucide-bel"
+        >
+          <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+          <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+        </svg>
+
+        {/* 프로필 아이콘 */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          className="lucide lucide-circle-user-round-icon lucide-circle-user-round"
+        >
+          <path d="M18 20a6 6 0 0 0-12 0" />
+          <circle cx="12" cy="10" r="4" />
+          <circle cx="12" cy="12" r="10" />
+        </svg>
       </div>
+
+
     </header>
   );
 };
