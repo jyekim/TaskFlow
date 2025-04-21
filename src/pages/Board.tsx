@@ -1,12 +1,38 @@
+import { useEffect } from "react";
+import axios from "../api/axiosInstance";
 import Column from "../components/Board/Column";
+import { initialData } from "../data/mockBoardData";
+import {  Project } from "../types/member";
+import { BoardData, ColumnType, Issue } from "../types/board";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+
 const Board = () => {
+  useEffect(() => {
+    axios
+      .get("https://5fe7-58-228-2-217.ngrok-free.app/api/project")
+      .then((res: unknown) => {
+        const response = res as { data: Project[] }; 
+        console.log(response.data);
+      })
+      .catch((err: unknown) => {
+        const error = err as Error;
+        console.error("❌❌❌❌❌❌에러 발생:", error.message);
+      });
+  }, []);
+
   return (
     <>
       <div className="flex justify-around gap-6 p-8 bg-blue-50 min-h-screen">
-        <Column title="Idea" issues={["새 프로젝트 기획", "이슈이슈", "계회이 자꾸 생기면? 그때 어떻게 할거야?"]} />
-        <Column title="To Do " issues={["로그인 구현"]} />
-        <Column title="In Progress" issues={["보드 UI 작업"]} />
-        <Column title="Done✅ " issues={["프로젝트 세팅"]} />
+      {initialData.columnOrder.map((columnId) => {
+        const column = initialData.columns[columnId]; 
+        return (
+          <Column 
+            key={column.id} 
+            title={column.title} 
+            issues={column.issues}
+          />
+        );
+      })}
       </div>
     </>
   );

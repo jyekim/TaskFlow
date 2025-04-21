@@ -1,7 +1,8 @@
+import { Issue } from "../../types/board";
 
 type ColumnProps = {
     title: string;
-    issues: string[];
+    issues: Issue[];
   };
   
 
@@ -13,7 +14,7 @@ type ColumnProps = {
         <div className="flex flex-col px-4 py-2 space-y-2">
           {issues.map((issue, index) => (
             <div key={index} className="border p-2 rounded shadow-sm">
-              {issue}
+              {issue.content}
             </div>
           ))}
         </div>
