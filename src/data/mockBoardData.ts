@@ -23,7 +23,7 @@ export const initialData:BoardData = {
         },
 
         inProgress: {
-            id: "inprogress",
+            id: "inProgress",
             title: "InProgress",
             issues: [
                 { id: "inprogress1", content: "진행중1"},
