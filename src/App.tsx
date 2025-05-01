@@ -1,20 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Board from "../src/pages/Board";
-import Header from "./components/common/Header";
-import Footer from "./components/common/Footer";
+import Login from "../src/pages/Login";
+import Layout from "./components/common/Layout";
 import "./App.css";
 
 function App() {
   return (
     <BrowserRouter>
-    <div className="flex flex-col ">
-      <Header/>
-      <Routes>     
-        <Route path="/" element={<Board/>}/>
-        <Route path="/board" element={<Board />} />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
+        <Route element={<Layout />}>
+          <Route path="/board" element={<Board />} />
+        </Route>
       </Routes>
-      <Footer/>
-      </div>
     </BrowserRouter>
   );
 }

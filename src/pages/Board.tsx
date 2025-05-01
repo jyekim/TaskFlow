@@ -23,7 +23,7 @@ const reorder = (list: Issue[], startIndex: number, endIndex: number): Issue[] =
 const Board = () => {
   const [columns, setColumns] = useState(initialData.columns);
   const [columnOrder] = useState(initialData.columnOrder);
-  // const [boardData, setBoardData] = useState<BoardData>(initialData);
+
 //드래그 종료 후 아이템 이동되었을때 상태 업데이트 함수 
   const onDragEnd = ({ source, destination }: DropResult) => {
     if(!destination) return;
