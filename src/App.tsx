@@ -8,9 +8,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* 임시주석처리용용 */}
         <Route path="/login" element={<Login />} />
           <Route path="/" element={<Login />} />
+        {/* 임시주석처리용용 */}
         <Route element={<Layout />}>
+          <Route path="/" element={<Board />} />
           <Route path="/board" element={<Board />} />
         </Route>
       </Routes>

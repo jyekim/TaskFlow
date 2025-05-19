@@ -79,7 +79,7 @@ const Board = () => {
     console.log("✅ useEffect 실행됨");
 
     axios
-      .get("https://52a3-58-228-2-217.ngrok-free.app/api/project", {
+      .get("/project", {
         headers: {
           "ngrok-skip-browser-warning": "true",
         },

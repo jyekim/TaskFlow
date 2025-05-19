@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../api/axiosInstance"
 import UserInput from "../components/Login/UserInput";
 
 const Login = () => {
@@ -20,11 +21,13 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
+    console.log("로그인 시도됨!!!!!")
     try {
-      const response = await axios.post(
-        "https://604b-58-228-2-217.ngrok-free.app/api/login",
+      const response = await api.post(
+        "/login",
         formData // 여기서 formData가 { id, password }
       );
+     console.log("응답하기:", response.data)
       const { token } = response.data;
   
       // 토큰 저장
