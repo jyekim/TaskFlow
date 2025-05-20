@@ -45,6 +45,10 @@ const Login = () => {
     }
   };
 
+  const handleSignUp = () => {
+    navigate("/signUp");
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-10 rounded-2xl shadow-md w-full max-w-md">
@@ -71,7 +75,7 @@ const Login = () => {
             로그인
           </button>
           <button
-            onClick={handleLogin}
+            onClick={handleSignUp}
             className="w-full bg-white hover:bg-gray-100 text-blue-700 border border-blue-700 font-semibold py-2 rounded-lg transition"
           >
             회원가입

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "../api/axiosInstance";
-import Column from "../components/Board/Column";
+// import Column from "../components/Board/Column";
 import IssueCard from "../components/Board/IssueCard";
 import { initialData } from "../data/mockBoardData";
 import { Project } from "../types/member";
