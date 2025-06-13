@@ -4,25 +4,54 @@ import { useState } from "react";
 const Header = () => {
   const navigate = useNavigate();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isProjectOpen, setIsProjectOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
+
+  const ProjectList = ["프로젝트1", "프로젝트2", "프로젝트3"];
+
   return (
     <header className="w-full h-16 bg-blue-600 flex items-center justify-between px-6 text-white">
       {/* 왼쪽 정렬 */}
-      <div className="flex items-end space-x-5">
+      <div className="relative flex items-end space-x-5">
         <h1 className="text-2xl font-bold">TaskFlow</h1>
         <nav className="flex">
-          <ul className="space-x-4">
+          <div className="space-x-4">
             <Link to="/" className="hover:underline text-sm">
               내작업
             </Link>
-            <Link to="/board" className="hover:underline text-sm">
+            <button
+              className="hover:underline text-sm"
+              onClick={() => setIsProjectOpen(!isProjectOpen)}
+            >
               프로젝트
-            </Link>
-          </ul>
+            </button>
+          </div>
+
+          {isProjectOpen && (
+            <div className="absolute top-full mt-3 bg-white w-40 h-auto shadow-md rounded z-50 border border-r-4`">
+              <h2 className="text-black font-bold">모든 프로젝트</h2>
+              <ul>
+                {ProjectList.map((item, index) => (
+                  <li key={index}>
+                    <button className="w-full text-black hover:bg-gray-100 px-2 py-1">
+                      {item}
+                    </button>
+                    {index < ProjectList.length - 1 && <hr className="border-gray-200" />}
+                  </li>
+                ))}
+                {/* <button className="w-full text-black hover:bg-gray-100 px-2 py-1">
+                최근 프로젝트 목록들 렌더링
+              </button>
+              <button className="w-full text-black hover:bg-gray-100 px-2 py-1">
+                최근 프로젝트 목록들 렌더링
+              </button> */}
+              </ul>
+            </div>
+          )}
         </nav>
       </div>
 
@@ -63,37 +92,36 @@ const Header = () => {
           <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
         </svg>
 
+        <div className="flex items-end space-x-4 relative">
+          {/* 프로필 아이콘 */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="lucide lucide-circle-user-round-icon lucide-circle-user-round"
+            onClick={() => setIsProfileOpen(!isProfileOpen)}
+          >
+            <path d="M18 20a6 6 0 0 0-12 0" />
+            <circle cx="12" cy="10" r="4" />
+            <circle cx="12" cy="12" r="10" />
+          </svg>
 
-         <div className="flex items-end space-x-4 relative">
-        {/* 프로필 아이콘 */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          className="lucide lucide-circle-user-round-icon lucide-circle-user-round"
-          onClick={() => setIsProfileOpen(!isProfileOpen)}
-        >
-          <path d="M18 20a6 6 0 0 0-12 0" />
-          <circle cx="12" cy="10" r="4" />
-          <circle cx="12" cy="12" r="10" />
-        </svg>
-
-        {isProfileOpen && (
-          <div className="absolute top-full right-0 mt-2 bg-white w-24 h-auto shadow-md rounded z-50 border border-r-4">
-            <button
-              onClick={handleLogout}
-              className="w-full text-black hover:bg-gray-100 px-2 py-1"
-            >
-              로그아웃
-            </button>
-          </div>
-        )}
+          {isProfileOpen && (
+            <div className="absolute top-full right-0 mt-2 bg-white w-24 h-auto shadow-md rounded z-50 border border-r-4">
+              <button
+                onClick={handleLogout}
+                className="w-full text-black hover:bg-gray-100 px-2 py-1"
+              >
+                로그아웃
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

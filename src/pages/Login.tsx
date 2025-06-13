@@ -9,9 +9,11 @@ const Login = () => {
     id: "",
     password: "",
     loginType: "NORMAL",
-  });
+  })
+;
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,7 +24,7 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    console.log("로그인 시도됨!!!!!");
+  
     try {
       const response = await api.post(
         "/login",
@@ -53,7 +55,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-10 rounded-2xl shadow-md w-full max-w-md">
         <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
-          taskFlow
+          TaskFlow
         </h1>
         <div className="space-y-4">
           <UserInput
