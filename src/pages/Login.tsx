@@ -33,7 +33,6 @@ const Login = () => {
     });
       console.log("응답하기:", response.data);
       const { token } = response.data;
-
       // 토큰 저장
       localStorage.setItem("accessToken", token);
       // 페이지 이동

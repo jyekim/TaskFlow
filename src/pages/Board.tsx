@@ -12,88 +12,116 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 
-const reorder = (list: Issue[], startIndex: number, endIndex: number): Issue[] => {
+const reorder = (
+  list: Issue[],
+  startIndex: number,
+  endIndex: number
+): Issue[] => {
   const result = [...list];
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
   return result;
 };
 
-
 const Board = () => {
-  const [columns, setColumns] = useState(initialData.columns);
-  const [columnOrder] = useState(initialData.columnOrder);
+  // const [columns, setColumns] = useState(initialData.columns);
+  // const [columnOrder] = useState(initialData.columnOrder);
 
-//드래그 종료 후 아이템 이동되었을때 상태 업데이트 함수 
+  const [columns, setColumns] = useState<{ [key: string]: ColumnType }>({});
+  const [columnOrder, setColumnOrder] = useState<string[]>([]);
+
+  //드래그 종료 후 아이템 이동되었을때 상태 업데이트 함수
   const onDragEnd = ({ source, destination }: DropResult) => {
-    if(!destination) return;
+    if (!destination) return;
 
     console.log("source.droppableId가 뭐야", source.droppableId);
     console.log("destination.droppable는 뭐여", destination.droppableId);
 
-    if(source.droppableId === destination.droppableId) {
+    if (source.droppableId === destination.droppableId) {
       const column = columns[source.droppableId];
       const newIssues = reorder(column.issues, source.index, destination.index);
 
-
       const newColumn = {
         ...column,
-        issues: newIssues
+        issues: newIssues,
       };
 
       setColumns({
         ...columns,
-          [source.droppableId]: newColumn
+        [source.droppableId]: newColumn,
       });
-
     } else {
-        const sourceColumn = columns[source.droppableId];
-        const destColumn = columns[destination.droppableId];
-      
-        const sourceIssues = [...sourceColumn.issues];
-        const destIssues = [...destColumn.issues];
-      
-        const [movedItem] = sourceIssues.splice(source.index, 1);
-        destIssues.splice(destination.index, 0, movedItem);
-      
-        setColumns({
-          ...columns,
-          [source.droppableId]: {
-            ...sourceColumn,
-            issues: sourceIssues
-          },
-          [destination.droppableId]: {
-            ...destColumn,
-            issues: destIssues
-          }
-        });
-      }
+      const sourceColumn = columns[source.droppableId];
+      const destColumn = columns[destination.droppableId];
 
-      console.log("source", source);
-      console.log("destination", destination);
-    
+      const sourceIssues = [...sourceColumn.issues];
+      const destIssues = [...destColumn.issues];
+
+      const [movedItem] = sourceIssues.splice(source.index, 1);
+      destIssues.splice(destination.index, 0, movedItem);
+
+      setColumns({
+        ...columns,
+        [source.droppableId]: {
+          ...sourceColumn,
+          issues: sourceIssues,
+        },
+        [destination.droppableId]: {
+          ...destColumn,
+          issues: destIssues,
+        },
+      });
+    }
+
+    console.log("source", source);
+    console.log("destination", destination);
   };
 
+  axios
+  .get("/todo", {
+    headers: { "ngrok-skip-browser-warning": "true" },
+    withCredentials: true,
+  })
+  .then((res) => {
+    console.log("✅ 서버 응답:", res.data);
+  })
+  .catch((err) => {
+    console.error("❌ 에러 발생!");
+    console.error("에러 메시지:", err.message);
 
-  useEffect(() => {
-    console.log("✅ useEffect 실행됨");
+    // 응답 객체가 존재할 때
+    if (err.response) {
+      console.error("상태 코드:", err.response.status);
+      console.error("응답 데이터:", err.response.data);
+    } else if (err.request) {
+      // 요청은 되었지만 응답이 없을 때
+      console.error("요청은 보냈지만 응답이 없습니다:", err.request);
+    } else {
+      // 요청 자체에 문제가 있을 때
+      console.error("요청 설정 에러:", err.message);
+    }
+  });
 
-    axios
-      .get("/project", {
-        headers: {
-          "ngrok-skip-browser-warning": "true",
-        },
-        withCredentials: true,
-      })
-      .then((res: unknown) => {
-        const response = res as { data: Project[] };
-        console.log("✅ 서버 응답:", response.data);
-      })
-      .catch((err: unknown) => {
-        const error = err as Error;
-        console.error("❌❌❌❌❌❌에러 발생:", error.message);
-      });
-  }, []);
+
+  // useEffect(() => {
+  //   console.log("✅ useEffect 실행됨");
+
+  //   axios
+  //     .get("/todos", {
+  //       headers: {
+  //         "ngrok-skip-browser-warning": "true",
+  //       },
+  //       withCredentials: true,
+  //     })
+  //     .then((res: unknown) => {
+  //       const response = res as { data: Project[] };
+  //       console.log("✅ 서버 응답:", response.data);
+  //     })
+  //     .catch((err: unknown) => {
+  //       const error = err as Error;
+  //       console.error("❌❌❌❌❌❌에러 발생:", error.message);
+  //     });
+  // }, []);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -120,8 +148,7 @@ const Board = () => {
                         index={index}
                       >
                         {(provided) => (
-                         
-                            <IssueCard issue={issue} provided={provided} />
+                          <IssueCard issue={issue} provided={provided} />
                         )}
                       </Draggable>
                     ))}
