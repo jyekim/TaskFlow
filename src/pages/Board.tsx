@@ -78,19 +78,38 @@ const Board = () => {
   };
 
 
-  useEffect(() => {
+useEffect(() => {
   const fetchTodos = async () => {
     try {
       const res = await axios.get("/todo");
-      console.log("✅ 서버 응답:", res.data);
+      const data = res.data; // <- 위에서 말한 배열 형태
+
+      console.log("✅ 서버 응답:", data);
+
+      const newColumns: { [key: string]: ColumnType } = {};
+      const newColumnOrder: string[] = [];
+
+      data.forEach((section: any) => {
+        const { todoStatus, todos } = section;
+
+        newColumns[todoStatus] = {
+          id: todoStatus,
+          title:
+            todoStatus === "READY"
+              ? "시작 전"
+              : todoStatus === "IN_PROGRESS"
+              ? "진행 중"
+              : "완료",
+          issues: todos,
+        };
+
+        newColumnOrder.push(todoStatus);
+      });
+
+      setColumns(newColumns);
+      setColumnOrder(newColumnOrder);
     } catch (err: any) {
-      console.error("❌ 에러 발생!");
-      if (err.response) {
-        console.error("상태 코드:", err.response.status);
-        console.error("응답 데이터:", err.response.data);
-      } else {
-        console.error("요청 문제:", err.message);
-      }
+      console.error("❌ 에러 발생!", err);
     }
   };
 
@@ -99,25 +118,6 @@ const Board = () => {
 
 
 
-  // useEffect(() => {
-  //   console.log("✅ useEffect 실행됨");
-
-  //   axios
-  //     .get("/todos", {
-  //       headers: {
-  //         "ngrok-skip-browser-warning": "true",
-  //       },
-  //       withCredentials: true,
-  //     })
-  //     .then((res: unknown) => {
-  //       const response = res as { data: Project[] };
-  //       console.log("✅ 서버 응답:", response.data);
-  //     })
-  //     .catch((err: unknown) => {
-  //       const error = err as Error;
-  //       console.error("❌❌❌❌❌❌에러 발생:", error.message);
-  //     });
-  // }, []);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>

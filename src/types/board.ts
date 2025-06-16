@@ -1,19 +1,9 @@
 export interface Issue {
-  id: string;
-  content:string;
-}
-
-export interface IssueType {
-  id: string;
+  id: number;
   title: string;
-  description: string;
-};
-
-export interface ColumnProps {
-  title: string;
-  issues: Issue[];
+  todoStatus: "READY" | "IN_PROGRESS" | "DONE";
+  sort: number;
 }
-
 
 export interface ColumnType {
   id: string;
@@ -21,11 +11,20 @@ export interface ColumnType {
   issues: Issue[];
 }
 
-export interface BoardData {
-  columns: {
-    [key: string]: ColumnType;
-  };
-  columnOrder: string[];
-}
+// export interface IssueType {
+//   id: string;
+//   title: string;
+//   description: string;
+// }
 
+// export interface ColumnProps {
+//   title: string;
+//   issues: Issue[];
+// }
 
+// export interface BoardData {
+//   columns: {
+//     [key: string]: ColumnType;
+//   };
+//   columnOrder: string[];
+// }
