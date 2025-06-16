@@ -77,30 +77,26 @@ const Board = () => {
     console.log("destination", destination);
   };
 
-  axios
-  .get("/todo", {
-    headers: { "ngrok-skip-browser-warning": "true" },
-    withCredentials: true,
-  })
-  .then((res) => {
-    console.log("✅ 서버 응답:", res.data);
-  })
-  .catch((err) => {
-    console.error("❌ 에러 발생!");
-    console.error("에러 메시지:", err.message);
 
-    // 응답 객체가 존재할 때
-    if (err.response) {
-      console.error("상태 코드:", err.response.status);
-      console.error("응답 데이터:", err.response.data);
-    } else if (err.request) {
-      // 요청은 되었지만 응답이 없을 때
-      console.error("요청은 보냈지만 응답이 없습니다:", err.request);
-    } else {
-      // 요청 자체에 문제가 있을 때
-      console.error("요청 설정 에러:", err.message);
+  useEffect(() => {
+  const fetchTodos = async () => {
+    try {
+      const res = await axios.get("/todo");
+      console.log("✅ 서버 응답:", res.data);
+    } catch (err: any) {
+      console.error("❌ 에러 발생!");
+      if (err.response) {
+        console.error("상태 코드:", err.response.status);
+        console.error("응답 데이터:", err.response.data);
+      } else {
+        console.error("요청 문제:", err.message);
+      }
     }
-  });
+  };
+
+  fetchTodos();
+}, []);
+
 
 
   // useEffect(() => {

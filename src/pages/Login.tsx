@@ -31,10 +31,11 @@ const Login = () => {
         {...formData, 
         loginType: "NORMAL",
     });
-      console.log("응답하기:", response.data);
-      const { token } = response.data;
+      console.log("로그인 응답하기:", response.data);
+      // const { token } = response.data;
       // 토큰 저장
-      localStorage.setItem("accessToken", token);
+      localStorage.setItem("accessToken", response.data.accessToken);
+      console.log("accessToken", localStorage.getItem("accessToken"));
       // 페이지 이동
       navigate("/board");
     } catch (err: unknown) {
