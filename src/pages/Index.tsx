@@ -3,9 +3,11 @@ import IndexBoardCard from '../components/Index/IndexBoardCard';
 import { ListNotice, NoticeRequest } from '../types/notice';
 import { Column } from '../types/table';
 import { useForm } from 'react-hook-form';
+import { ListAnonBoard, ListAnonBoardRequest } from '../types/anonBoard';
 
 const Index = () => {
-    /** 공지사항 전달 데이터 */
+
+    /** 공지사항 */
     const noticeRequest: NoticeRequest = {
         page: 1, 
         limit: 5, 
@@ -27,11 +29,33 @@ const Index = () => {
         { header: '조회수', accessor: 'view' },
     ]
 
+    /** 익명 게시판 */
+    const anonBoardReq: ListAnonBoardRequest = {
+        page: 1, 
+        limit: 5, 
+        search: null, 
+        pageSize: null, 
+        order: null, 
+        direction: null,
+        keyword: null, 
+    };
+    const anonBoardParamQuery = useForm<ListAnonBoardRequest>({
+        defaultValues: anonBoardReq
+    });
+    const anonBoardItems: ListAnonBoard[] = [];
+    const anonBoardColumns: Column[] = [
+        {header:'제목' , accessor:'title'},
+        {header:'작성일' , accessor:'createDate'},
+        {header:'조회수' , accessor:'view'},
+    ]
+
+
     
   return (
       <div className='w-full max-w-[1280px] mx-auto'>
           <div className='flex space-x-4'>
               <div className='flex-1 bg-gray-300 p-4'>
+
                   <IndexBoardCard<NoticeRequest, ListNotice>
                       title='공지사항'
                       api='/notice'
@@ -40,8 +64,17 @@ const Index = () => {
                       columns={noticeColumns}
                       addLink='/notice' 
                   />
+
               </div>
               <div className='flex-1 bg-gray-500 p-4'>
+                  <IndexBoardCard<ListAnonBoardRequest, ListAnonBoard>
+                    title = '익명게시판'
+                    api ='/anon'
+                    paramQuery={anonBoardParamQuery}
+                    resItem={anonBoardItems}
+                    columns={anonBoardColumns}
+                    addLink='/anon'
+                  />
                 
               </div>
           </div>

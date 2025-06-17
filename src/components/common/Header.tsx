@@ -17,7 +17,7 @@ const Header = () => {
     <header className="w-full h-16 bg-blue-600 flex items-center justify-between px-6 text-white">
       {/* 왼쪽 정렬 */}
       <div className="relative flex items-end space-x-5">
-        <h1 className="text-2xl font-bold">TaskFlow</h1>
+        <Link to ='/index'><h1 className="text-2xl font-bold">TaskFlow</h1></Link>
         <nav className="flex">
           <div className="space-x-4">
             <Link to="/" className="hover:underline text-sm">
@@ -29,6 +29,8 @@ const Header = () => {
             >
               프로젝트
             </button>
+            <Link to ='/notice'>공지사항</Link>
+            <Link to ='/anon'>익명게시판</Link>
           </div>
 
           {isProjectOpen && (

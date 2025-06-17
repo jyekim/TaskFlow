@@ -27,17 +27,30 @@ const IndexBoardCard = <Req extends FieldValues , Res>({
     const [data, setData] = useState<Res[]>(resItem);
 
     useEffect(() => {
-        console.log('useEffect 실행');
         const fetchData = async () => {
-            console.log('fetch 메서드 실행?')
-            try {
-                const params = paramQuery.getValues();
-                const res = await axios.get(api, { params });
-                console.log('호출 데이터 > ', res.data.content);
-                setData(res.data.content);
-            } catch (err) {
-                console.error('axios 호출 실패', err)
+            
+            if (title === '공지사항') {
+                try {
+                    const params = paramQuery.getValues();
+                    const res = await axios.get(api, { params });
+                    console.log('호출 공지사항 > ', res.data.content);
+                    setData(res.data.content);
+                } catch (err) {
+                    console.error('axios 호출 실패', err)
+                }
             }
+            else if (title === '익명게시판') {
+                try {
+                    const params = paramQuery.getValues();
+                    const res = await axios.get(api, { params });
+                    console.log('호출 익명게시판 > ', res.data.list);
+                    setData(res.data.list);
+                } catch (err) {
+                    console.error('axios 호출 실패', err)
+                }
+            }
+
+        
         };
         fetchData();
     }, [api, paramQuery]);

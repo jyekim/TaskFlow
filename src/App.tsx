@@ -6,6 +6,7 @@ import Layout from "./components/common/Layout";
 import "./App.css";
 import Index from "./pages/Index";
 import Notice from "./pages/Notice";
+import AnonBoard from "./pages/AnonBoard";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/board" element={<Board />} />
           <Route path="/index" element={<Index />} />
           <Route path="/notice" element={<Notice/>} />
+          <Route path="/anon" element={<AnonBoard/>} />
         </Route>
       </Routes>
     </BrowserRouter>
