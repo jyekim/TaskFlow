@@ -37,7 +37,7 @@ const Login = () => {
       localStorage.setItem("accessToken", response.data.accessToken);
       console.log("accessToken", localStorage.getItem("accessToken"));
       // 페이지 이동
-      navigate("/board");
+      navigate("/index");
     } catch (err: unknown) {
       console.error("로그인 실패", err);
       if (axios.isAxiosError(err) && err.response) {

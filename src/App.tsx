@@ -4,6 +4,8 @@ import Login from "../src/pages/Login";
 import Signup from "./pages/Signup";
 import Layout from "./components/common/Layout";
 import "./App.css";
+import Index from "./pages/Index";
+import Notice from "./pages/Notice";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Board />} />
           <Route path="/board" element={<Board />} />
+          <Route path="/index" element={<Index />} />
+          <Route path="/notice" element={<Notice/>} />
         </Route>
       </Routes>
     </BrowserRouter>
